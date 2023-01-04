@@ -82,7 +82,8 @@ window.addEventListener('load', () => {
     container: '#algolia-search-input',
     showReset: false,
     showSubmit: false,
-    placeholder: GLOBAL_CONFIG.algolia.languages.input_placeholder,
+    searchOnEnterKeyPressOnly: true,
+    placeholder: "",//GLOBAL_CONFIG.algolia.languages.input_placeholder,
     showLoadingIndicator: true
   })
 
