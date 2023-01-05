@@ -1,0 +1,748 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>无序关联式容器 | 摘星崖</title><meta name="author" content="Enthushtism_"><meta name="copyright" content="Enthushtism_"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="无序关联式容器  概念  无序关联式容器，又称哈希容器，是一种不会自动排序的、可以快速查找。删除、修改的容器。 和关联式容器一样，无序容器也使用键值对（pair 类型）的方式存储数据 关联式容器和无序关联式容器的底层实现存在区别：  关联式容器的底层实现采用的是红黑树 无序容器的底层实现采用的是哈希表  无序关联式容器和关联式容器在使用上的区别在于： 1.无序容器内部存储的键值对是无序的，各键值对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无序关联式容器">
+<meta property="og:url" content="http://example.com/2023/01/05/%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/index.html">
+<meta property="og:site_name" content="摘星崖">
+<meta property="og:description" content="无序关联式容器  概念  无序关联式容器，又称哈希容器，是一种不会自动排序的、可以快速查找。删除、修改的容器。 和关联式容器一样，无序容器也使用键值对（pair 类型）的方式存储数据 关联式容器和无序关联式容器的底层实现存在区别：  关联式容器的底层实现采用的是红黑树 无序容器的底层实现采用的是哈希表  无序关联式容器和关联式容器在使用上的区别在于： 1.无序容器内部存储的键值对是无序的，各键值对">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/avatar.png">
+<meta property="article:published_time" content="2023-01-05T02:53:04.000Z">
+<meta property="article:modified_time" content="2023-01-05T02:53:56.259Z">
+<meta property="article:author" content="Enthushtism_">
+<meta property="article:tag" content="stl">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="http://example.com/2023/01/05/%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: {"appId":"NKSY29S9JI","apiKey":"8d4250e2ca15c28ffb5d99b4a31988c1","indexName":"Hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '无序关联式容器',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-05 10:53:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">摘星崖</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无序关联式容器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-05T02:53:04.000Z" title="发表于 2023-01-05 10:53:04">2023-01-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-05T02:53:56.259Z" title="更新于 2023-01-05 10:53:56">2023-01-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/c/">c++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="无序关联式容器"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>无序关联式容器</h1>
+
+<h2>概念</h2>
+
+<p>无序关联式容器，又称哈希容器，是一种不会自动排序的、可以快速查找。删除、修改的容器。</p>
+<p>和关联式容器一样，无序容器也使用键值对（pair 类型）的方式存储数据</p>
+<p>关联式容器和无序关联式容器的底层实现存在区别：</p>
+<ul>
+<li>关联式容器的底层实现采用的是红黑树</li>
+<li>无序容器的底层实现采用的是哈希表</li>
+</ul>
+<p>无序关联式容器和关联式容器在使用上的区别在于：</p>
+<p>1.无序容器内部存储的键值对是无序的，各键值对的存储位置取决于该键值对中的键</p>
+<p>2.和关联式容器相比，无序容器擅长通过指定键查找对应的值（时间复杂度可近似认为 O(1)）；但对于使用迭代器遍历容器中存储的元素，无序容器的执行效率则不如关联式容器</p>
+<p>以上两个区别，都是因为无序关联式容器的底层实现（哈希表）采取的是链地址法</p>
+<h3>哈希表与链地址(无序关联式容器的底层实现)</h3>
+
+<p>STL对于所有的无序关联式容器都采取了链地址法的存储机制,譬如，对于一个unordered_set容器，其内部是这样存储的:</p>
+<img src="https://img-blog.csdnimg.cn/ac9d75b059b84c74b3d8733cdef460c8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5piv5LiA5Y-q5bCP5YWU5YWU77yB,size_12,color_FFFFFF,t_70,g_se,x_16">
+
+<p>如果是map，将数字改为键值对即可。</p>
+<p>STL标准库在创建哈希表时，首先申请一个vector，用于存储各个线性链表的头指针各个线性链表又称为桶，每个桶都有自己的编号，通常是数组下标，当有新的键值对（元素）存储时，就按照哈希表的操作执行即可。</p>
+<p>另外，因为底层采用的是哈希表，所以也有一个哈希表的负载因子的概念。这个概念用于衡量容器存储键值对的空&#x2F;满状态，负载因子越大，意味着容器越满，即各链表中挂载着越多的键值对，这无疑会降低容器查找目标键值对的效率；反之，负载因子越小，容器越空，但并不一定各个链表中挂载的键值对就越少。</p>
+<p>默认情况下，STL标准库对无序关联式容器的最大负载因子限制为1.0，当超过时，就会自动增加桶个数，同时对桶内键值对（元素）进行再哈希，<strong>此过程会导致部分容器迭代器失效，但指向单个键值对的引用或者指针仍然有效</strong></p>
+<p>2.和关联式容器相比，无序容器擅长通过指定键查找对应的值（平均时间复杂度为 O(1)）；但对于使用迭代器遍历容器中存储的元素，无序容器的执行效率则不如关联式容器</p>
+<h2>内容</h2>
+
+<p>常用的无序关联容器通常包括如下容器：</p>
+<table>
+    <tr>
+        <td width="250">unordered_map</td>
+        <td>存储键值对 <key, value> ，要求各个键值对键的值key不允许重复，且该容器中存储的键值对是无序的</td>
+    </tr>
+    <tr>
+        <td>unordered_set</td>
+        <td>存储元素，是无序且不重复的，相当于unordered_map中键值对的key=value</td>
+    </tr>
+    <tr>
+        <td>unordered_multimap</td>
+        <td>和 unordered_map 容器唯一的不同是 unordered_multimap 容器中存储元素的键可以重复（一旦值重复，则意味着键也是重复的）</td>
+    </tr>
+    <tr>
+        <td>unordered_multiset</td>
+        <td>和 unordered_set 容器唯一的不同是 unordered_multiset 容器中存储元素的值可以重复</td>
+    </tr>
+</table>
+
+
+
+<h2>无序关联式容器迭代器的通用函数</h2>
+
+<p>由于无序关联式容器都支持前向迭代器，无序关联式容器支持的操作符包括++p,p++,*p,&#x3D;&#x3D;和!&#x3D;,并且对于任意一个关联式容器都支持如下四个操作</p>
+<table>
+    <tr width="100">
+        <td>begin()</td>
+        <td>返回指向第一个元素的前向迭代器</td>
+    </tr>
+    <tr width="100">
+        <td>end()</td>
+        <td>返回指向容器最后一个元素之后一个位置的前向迭代器</td>
+    </tr>
+    <tr width="100">
+        <td>cbegin()</td>
+        <td>和 begin() 功能相同，只不过在其基础上增加了 const 属性，不能用于修改元素</td>
+    </tr>
+    <tr width="100">
+        <td>cend()</td>
+        <td>和 end() 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改元素</td>
+    </tr>
+</table>
+
+
+<p><strong>需要注意的是，在操作无序关联式容器的过程（尤其是向容器中添加新键值对）中，一旦当前容器的负载因子超过最大负载因子，容器就会适当增加桶的数量，并自动执行 rehash() 成员方法，重新调整各个键值对的存储位置（此过程又称“重哈希”），此过程很可能导致之前创建的迭代器失效。需要指出的是，上面四个函数返回的迭代器不受影响</strong></p>
+<h2>无序关联式容器用法</h2>
+
+<h3>unordered_map</h3>
+
+<p>直译过来就是无序的map容器，是的，就是这样~</p>
+<p>unordered_map 容器在<code>&lt;unordered_map&gt;</code>头文件中，使用需要:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br></pre></td></tr></table></figure>
+
+<h4>定义</h4>
+
+<p>一个unordered_map的定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt; <span class="keyword">class</span> <span class="title class_">Key</span>,                        <span class="comment">//键值对中键的类型</span></span><br><span class="line">           <span class="keyword">class</span> <span class="title class_">T</span>,                          <span class="comment">//键值对中值的类型</span></span><br><span class="line">           <span class="keyword">class</span> <span class="title class_">Hash</span> = hash&lt;Key&gt;,           <span class="comment">//容器内部存储键值对所用的哈希函数</span></span><br><span class="line">           <span class="keyword">class</span> Pred = equal_to&lt;Key&gt;,       <span class="comment">//判断各个键值对键相同的规则</span></span><br><span class="line">           <span class="keyword">class</span> Alloc = allocator&lt; pair&lt;<span class="type">const</span> Key,T&gt; &gt;  <span class="comment">// 指定分配器对象的类型</span></span><br><span class="line">           &gt; <span class="keyword">class</span> unordered_map;</span><br></pre></td></tr></table></figure>
+
+<p>定义的时候，前两个参数必须显示给出，第三个和第四个有默认，可以根据需要调整，第五个则基本不需要使用</p>
+<p><strong>需要注意，stl虽然默认给出了哈希函数和判断各个键值对键相同规则的函数，但是这些函数都只适用于基本数据类型，任何的自定义结构体与类都不再适用，需要使用者自行设计并显示给出</strong></p>
+<p>创建unordered_map及初始化：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>直接创建一个空的unordered_map</span><br><span class="line">unordered_map&lt;T1,T2&gt; m;</span><br><span class="line"><span class="number">2.</span>初始化成员列表</span><br><span class="line">unordered_map&lt;T1,T2&gt; m&#123;&#123;key1,value1&#125;,&#123;key2,value2&#125;...&#125;;</span><br><span class="line"><span class="number">3.</span>借助pair的移动构造函数</span><br><span class="line">unordered_map&lt;T1,T2&gt; m&#123;std::<span class="built_in">make_pair</span>(&#123;key1,value1&#125;),std::<span class="built_in">make_pair</span>(&#123;key2,value2&#125;)&#125;;</span><br><span class="line"><span class="number">4.</span>拷贝构造函数</span><br><span class="line">unordered_map&lt;T1,T2&gt; m1;</span><br><span class="line"><span class="function">unordered_map&lt;T1,T2&gt; <span class="title">m</span><span class="params">(m1)</span></span>;<span class="comment">//T1与T2以及比较函数必须一致</span></span><br><span class="line"><span class="number">5.</span>借助已有unordered_map容器指定的区间来定义及初始化</span><br><span class="line"><span class="function">unordered_map&lt;T1,T2&gt; <span class="title">m1</span><span class="params">(&#123;key1,value1&#125;,&#123;key2,value2&#125;)</span></span>;</span><br><span class="line"><span class="function">unordered_map&lt;T1,T2&gt; <span class="title">m2</span><span class="params">(++m1.begin(),m1.end())</span></span>;<span class="comment">//包括了&#123;key2,value2&#125;的一个unordered_map容器</span></span><br><span class="line">      </span><br><span class="line"><span class="comment">//一个空unordered_map</span></span><br><span class="line">unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; m;</span><br><span class="line"><span class="comment">//初始化成员列表</span></span><br><span class="line">unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; m4&#123; &#123;<span class="number">1</span>,<span class="number">10</span>&#125;,&#123;<span class="number">2</span>,<span class="number">20</span>&#125; &#125;;</span><br><span class="line"><span class="comment">//make_pair</span></span><br><span class="line">unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; m5&#123; std::<span class="built_in">make_pair</span>(<span class="number">1</span>, <span class="number">10</span>) &#125;;</span><br><span class="line"><span class="comment">//拷贝构造函数</span></span><br><span class="line"><span class="function">unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; <span class="title">m3</span><span class="params">(m)</span></span>;</span><br><span class="line"><span class="comment">//unordered_map容器区间</span></span><br><span class="line"><span class="function">unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; <span class="title">m6</span><span class="params">(++m4.begin(), m4.end())</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4>成员函数</h4>
+
+<table>
+    <tr width="100">
+        <td>find(key)</td>
+        <td>在容器中查找键值为key的键值对，如果成功找到，则返回指向该键值对的前向迭代器；反之，则返回和 end() 方法一样的迭代器。另外，如果 unordered_map 容器用 const 限定，则该方法返回的是 const 类型的前向迭代器。</td>
+    </tr>
+    <tr width="100">
+        <td>equal_range(key)</td>
+        <td>该方法返回一个 pair 对象（包含 2 个前向迭代器），表明当前容器中键为 key 的键值对所在的范围</td>
+    </tr>
+    <tr width="100">
+        <td>empty() </td>
+        <td>若容器为空，则返回 true；否则返回 false</td>
+    </tr>
+    <tr width="100">
+        <td>size()</td>
+        <td>返回当前 unordered_map 容器中存有键值对的个数</td>
+    </tr>
+    <tr width="100">
+        <td>max_size()</td>
+        <td>返回 unordered_map 容器所能容纳键值对的最大个数，其返回值与操作系统相关</td>
+    </tr>
+    <tr width="100">
+        <td>operator[]</td>
+        <td>[] 运算符的重载，unordered_map[i]相当于获取对应unordered_map容器中key为i的键值对的value，另外当unordered_map容器中不包含键值为key的键值对的时候，使用[]运算符会直接往里面添加键值为key的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>at(key)</td>
+        <td>找到 unordered_map 容器中 key 键对应的值，如果找不到，该函数会引发 std::out_of_range 异常 这是at函数与[]最大的不同</td>
+    </tr>
+    <tr width="100">
+        <td>insert()</td>
+        <td>向 unordered_map 容器中插入键值对</td>
+    </tr>
+    <tr width="100">
+        <td>erase()</td>
+        <td>删除 unordered_map 容器指定位置、指定键（key）值或者指定区域内的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>swap()</td>
+        <td>在 2 个unordered_map容器的类型一致的条件下，交换 2 个 unordered_map 容器中存储的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>clear()</td>
+        <td>清空 unordered_map 容器中所有的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>emplace()</td>
+        <td>在当前 unordered_map 容器中的指定位置处构造新键值对。其效果和插入键值对一样，但效率更高</td>
+    </tr>
+    <tr width="100">
+        <td>emplace_hint()</td>
+        <td>在本质上和 emplace() 在 unordered_map 容器中构造新键值对的方式是一样的，不同之处在于，使用者必须为该方法提供一个指示键值对生成位置的迭代器，并作为该方法的第一个参数</td>
+    </tr>
+    <tr width="100">
+        <td>count(key)</td>
+        <td>在当前 unordered_map 容器中，查找键为 key 的键值对的个数并返回。此外，由于 unordered_map 容器中各键值对的键的值是唯一的，因此该函数的返回值最大为 1</td>
+    </tr>
+    <tr width="100">
+        <td>bucket_count()</td>
+        <td>返回当前容器底层存储键值对时，使用桶（线性链表）的数量</td>
+    </tr>
+    <tr width="100">
+        <td>max_bucket_count()</td>
+        <td>返回当前系统中，unordered_map 容器底层最多可以使用多少桶</td>
+    </tr>
+    <tr width="100">
+        <td>bucket_size(i)</td>
+        <td>返回第 i 个桶中存储键值对的数量</td>
+    </tr>
+    <tr width="100">
+        <td>bucket(key)</td>
+        <td>返回以 key 为键的键值对所在桶的编号</td>
+    </tr>
+    <tr width="100">
+        <td>load_factor()</td>
+        <td>返回 unordered_map 容器中当前的负载因子</td>
+    </tr>
+    <tr width="100">
+        <td>max_load_factor()</td>
+        <td>返回或者设置当前 unordered_map 容器的负载因子</td>
+    </tr>
+    <tr width="100">
+        <td>rehash(n)</td>
+        <td>将当前容器底层使用桶的数量设置为 n</td>
+    </tr>
+    <tr width="100">
+        <td>reserve()</td>
+        <td>将存储桶的数量（也就是 bucket_count() 方法的返回值）设置为至少容纳count个元（不超过最大负载因子）所需的数量，并重新整理容器</td>
+    </tr>
+    <tr width="100">
+        <td>hash_function()</td>
+        <td>返回当前容器使用的哈希函数对象</td>
+    </tr>
+</table>
+
+
+<p>部分函数存在多个重载，实际上与map类似，这里只给出函数原型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span><span class="function">insert</span></span><br><span class="line"><span class="function">pair&lt;iterator,<span class="type">bool</span>&gt; <span class="title">insert</span> <span class="params">(<span class="type">const</span> T&amp; val)</span></span>;<span class="comment">//引用形式传递</span></span><br><span class="line"><span class="function">pair&lt;iterator,<span class="type">bool</span>&gt; <span class="title">insert</span> <span class="params">(T&amp;&amp; val)</span></span>;<span class="comment">//右值引用</span></span><br><span class="line">以上两个方法都是在容器中任意位置插入一个键值对，会返回一个pair对象，这个对象包括一个迭代器，和一个判断是否成功插入的<span class="type">bool</span>变量，如果插入成功为<span class="literal">true</span>，迭代器指向插入的位置，否则为<span class="literal">false</span>，迭代器指向容器中具有相同键的键值对</span><br><span class="line"><span class="function">iterator <span class="title">insert</span> <span class="params">(<span class="type">const</span> iterator pos, <span class="type">const</span> T&amp; val)</span></span>;</span><br><span class="line"><span class="function">iterator <span class="title">insert</span> <span class="params">(<span class="type">const</span> iterator pos, T&amp;&amp; val)</span></span>;</span><br><span class="line">以上两个方法返回的不是pair而是迭代器，这两个insert方法会在指定的位置插入val，插入成功则返回插入的位置，失败则返回容器中具有相同键的键值对，需要注意的是就算指定了位置，最后键值对在容器中的位置仍然是按照键值排序的位置</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span> <span class="params">(iterator begin, iterator end)</span></span>;</span><br><span class="line">向一个unordered_map容器中插入[begin，end)迭代器范围内的键值对</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span> <span class="params">(&#123;val1, val2, ...&#125;)</span></span>;</span><br><span class="line">一次性插入多个键值对</span><br><span class="line"><span class="number">2.</span><span class="function">emplace</span></span><br><span class="line"><span class="function">pair&lt;iterator,<span class="type">bool</span>&gt; <span class="title">emplace</span> <span class="params">(first,second)</span></span>;</span><br><span class="line"><span class="function">iterator <span class="title">emplace_hint</span> <span class="params">(<span class="type">const</span> iterator pos,first,second)</span></span>;    </span><br><span class="line">这两个方法使用的时候十分类似insert，除了在传递参数的时候不需要以&#123;&#125;括住pair对象的属性，并且效率比insert更高，因为其底层实现是在容器内部直接构造，而insert是先构造然后拷贝或移动     </span><br><span class="line"><span class="number">3.</span><span class="built_in">erase</span>()</span><br><span class="line"><span class="function"><span class="type">size_t</span> <span class="title">erase</span> <span class="params">(<span class="type">const</span> T&amp; key)</span></span>;<span class="comment">//删除 unordered_map 容器中键为 key 的键值对，返回值为删除的键值对个数</span></span><br><span class="line"><span class="function">iterator  <span class="title">erase</span> <span class="params">(<span class="type">const</span> iterator pos)</span></span>;<span class="comment">//删除 pos 迭代器指向的元素，返回值为一个迭代器，其指向 unordered_map 容器中删除元素之后的第一个元素</span></span><br><span class="line"><span class="function">iterator  <span class="title">erase</span> <span class="params">(<span class="type">const</span> iterator begin, <span class="type">const</span> iterator end)</span></span>;<span class="comment">//删除 [begin,end) 区间内的所有键值对，返回值为一个迭代器，其指向 unordered_map 容器中删除元素之后的第一个元素          </span></span><br></pre></td></tr></table></figure>
+
+<h3>unordered_set</h3>
+
+<p>直译为“无序的 set 容器”，是的，就是这样~</p>
+<p>正如map和set的区别，unordered_map与unordered_set的区别是一样的</p>
+<p>1.不再以键值对的形式存储数据，而是直接存储数据的值</p>
+<p>2.容器内部存储的各个元素的值都互不相等，且不能被修改</p>
+<p>3.不做排序处理</p>
+<p>unordered_set 容器在<code>&lt;unordered_set&gt;</code>头文件中，使用需要:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br></pre></td></tr></table></figure>
+
+<h4>定义</h4>
+
+<p>一个unordered_set的定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt; <span class="keyword">class</span> <span class="title class_">Key</span>,            <span class="comment">//容器中存储元素的类型</span></span><br><span class="line">           <span class="keyword">class</span> <span class="title class_">Hash</span> = hash&lt;Key&gt;,    <span class="comment">//确定元素存储位置所用的哈希函数</span></span><br><span class="line">           <span class="keyword">class</span> Pred = equal_to&lt;Key&gt;,   <span class="comment">//判断各个元素是否相等所用的函数</span></span><br><span class="line">           <span class="keyword">class</span> Alloc = allocator&lt;Key&gt;   <span class="comment">//指定分配器对象的类型</span></span><br><span class="line">           &gt; <span class="keyword">class</span> unordered_set;</span><br></pre></td></tr></table></figure>
+
+<p>基本上只需要定义第一个，根据需要给出第二第三个，第四个参数保持默认即可</p>
+<p><strong>需要注意，stl虽然默认给出了哈希函数和判断各个键值对键相同规则的函数，但是这些函数都只适用于基本数据类型，任何的自定义结构体与类都不再适用，需要使用者自行设计并显示给出</strong></p>
+<p>创建unordered_set及初始化：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>直接创建一个空的unordered_set</span><br><span class="line">unordered_set&lt;T&gt; s;</span><br><span class="line"><span class="number">2.</span>初始化成员列表</span><br><span class="line">unordered_set&lt;T&gt; s&#123;value1,value2...&#125;;</span><br><span class="line"><span class="number">3.</span>拷贝构造函数</span><br><span class="line">unordered_set&lt;T&gt; s1;</span><br><span class="line"><span class="function">unordered_set&lt;T&gt; <span class="title">s</span><span class="params">(s1)</span></span>;<span class="comment">//T与比较函数必须一致</span></span><br><span class="line"><span class="number">4.</span>借助已有unordered_set容器指定的区间来定义及初始化</span><br><span class="line"><span class="function">unordered_set&lt;T&gt; <span class="title">s1</span><span class="params">(value1,value2)</span></span>;</span><br><span class="line"><span class="function">unordered_set&lt;T&gt; <span class="title">s2</span><span class="params">(++s1.begin(),s1.end())</span></span>;<span class="comment">//包括了&#123;value2&#125;的一个unordered_set容器</span></span><br><span class="line">      </span><br><span class="line"><span class="comment">//一个空unordered_set</span></span><br><span class="line">unordered_set&lt;<span class="type">int</span>,less&lt;<span class="type">int</span>&gt;&gt; s;</span><br><span class="line"><span class="comment">//初始化成员列表</span></span><br><span class="line">unordered_set&lt;<span class="type">int</span>&gt; s4&#123; <span class="number">10</span>,<span class="number">20</span> &#125;;</span><br><span class="line"><span class="comment">//拷贝构造函数</span></span><br><span class="line"><span class="function">unordered_set&lt;<span class="type">int</span>&gt; <span class="title">s3</span><span class="params">(s)</span></span>;</span><br><span class="line"><span class="comment">//unordered_set容器区间</span></span><br><span class="line"><span class="function">unordered_set&lt;<span class="type">int</span>&gt; <span class="title">s6</span><span class="params">(++s4.begin(), s4.end())</span></span>;</span><br><span class="line"><span class="comment">//修改unordered_set容器的排序规则</span></span><br><span class="line">unordered_set&lt;<span class="type">int</span>&gt; s7;</span><br></pre></td></tr></table></figure>
+
+<h4>成员函数</h4>
+
+<table>
+    <tr width="100">
+        <td>find(key)</td>
+        <td>在容器中查找键值为key的键值对，如果成功找到，则返回指向该键值对的前向迭代器；反之，则返回和 end() 方法一样的迭代器。另外，如果 unordered_set 容器用 const 限定，则该方法返回的是 const 类型的前向迭代器。</td>
+    </tr>
+    <tr width="100">
+        <td>equal_range(key)</td>
+        <td>该方法返回一个 pair 对象（包含 2 个前向迭代器），表明当前容器中键为 key 的键值对所在的范围</td>
+    </tr>
+    <tr width="100">
+        <td>empty() </td>
+        <td>若容器为空，则返回 true；否则返回 false</td>
+    </tr>
+    <tr width="100">
+        <td>size()</td>
+        <td>返回当前 unordered_set 容器中存有键值对的个数</td>
+    </tr>
+    <tr width="100">
+        <td>max_size()</td>
+        <td>返回 unordered_set 容器所能容纳键值对的最大个数，其返回值与操作系统相关</td>
+    </tr>
+    <tr width="100">
+        <td>insert()</td>
+        <td>向 unordered_set 容器中插入键值对</td>
+    </tr>
+    <tr width="100">
+        <td>erase()</td>
+        <td>删除 unordered_set 容器指定位置、指定键（key）值或者指定区域内的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>swap()</td>
+        <td>在 2 个unordered_set容器的类型一致的条件下，交换 2 个 unordered_set 容器中存储的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>clear()</td>
+        <td>清空 unordered_set 容器中所有的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>emplace()</td>
+        <td>在当前 unordered_set 容器中的指定位置处构造新键值对。其效果和插入键值对一样，但效率更高</td>
+    </tr>
+    <tr width="100">
+        <td>emplace_hint()</td>
+        <td>在本质上和 emplace() 在 unordered_set 容器中构造新键值对的方式是一样的，不同之处在于，使用者必须为该方法提供一个指示键值对生成位置的迭代器，并作为该方法的第一个参数</td>
+    </tr>
+    <tr width="100">
+        <td>count(key)</td>
+        <td>在当前 unordered_set 容器中，查找键为 key 的键值对的个数并返回。此外，由于 unordered_set 容器中各键值对的键的值是唯一的，因此该函数的返回值最大为 1</td>
+    </tr>
+    <tr width="100">
+        <td>bucket_count()</td>
+        <td>返回当前容器底层存储键值对时，使用桶（线性链表）的数量</td>
+    </tr>
+    <tr width="100">
+        <td>max_bucket_count()</td>
+        <td>返回当前系统中，unordered_set 容器底层最多可以使用多少桶</td>
+    </tr>
+    <tr width="100">
+        <td>bucket_size(i)</td>
+        <td>返回第 i 个桶中存储键值对的数量</td>
+    </tr>
+    <tr width="100">
+        <td>bucket(key)</td>
+        <td>返回以 key 为键的键值对所在桶的编号</td>
+    </tr>
+    <tr width="100">
+        <td>load_factor()</td>
+        <td>返回 unordered_set 容器中当前的负载因子</td>
+    </tr>
+    <tr width="100">
+        <td>max_load_factor()</td>
+        <td>返回或者设置当前 unordered_set 容器的负载因子</td>
+    </tr>
+    <tr width="100">
+        <td>rehash(n)</td>
+        <td>将当前容器底层使用桶的数量设置为 n</td>
+    </tr>
+    <tr width="100">
+        <td>reserve()</td>
+        <td>将存储桶的数量（也就是 bucket_count() 方法的返回值）设置为至少容纳count个元（不超过最大负载因子）所需的数量，并重新整理容器</td>
+    </tr>
+    <tr width="100">
+        <td>hash_function()</td>
+        <td>返回当前容器使用的哈希函数对象</td>
+    </tr>
+</table>
+
+
+<p>注意，对于set类容器没有重载[]和at函数，并且由于 unordered_set 容器内部存储的元素值不能被修改，因此无论使用哪个迭代器方法获得的迭代器，都不能用于修改容器中元素的值</p>
+<h3>unordered_multimap</h3>
+
+<p>可存储多个相同键值的unordered_map</p>
+<p>unordered_multimap 容器在<code>&lt;unordered_map&gt;</code>头文件中，使用需要:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br></pre></td></tr></table></figure>
+
+<h4>定义</h4>
+
+<p>一个unordered_multimap的定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt; <span class="keyword">class</span> <span class="title class_">Key</span>,      <span class="comment">//键（key）的类型</span></span><br><span class="line">           <span class="keyword">class</span> <span class="title class_">T</span>,        <span class="comment">//值（value）的类型</span></span><br><span class="line">           <span class="keyword">class</span> <span class="title class_">Hash</span> = hash&lt;Key&gt;,  <span class="comment">//底层存储键值对时采用的哈希函数</span></span><br><span class="line">           <span class="keyword">class</span> Pred = equal_to&lt;Key&gt;,  <span class="comment">//判断各个键值对的键相等的规则</span></span><br><span class="line">           <span class="keyword">class</span> Alloc = allocator&lt; pair&lt;<span class="type">const</span> Key,T&gt; &gt; <span class="comment">// 指定分配器对象的类型</span></span><br><span class="line">           &gt; <span class="keyword">class</span> unordered_multimap;</span><br></pre></td></tr></table></figure>
+
+<p>定义的时候，前两个参数必须显示给出，第三个和第四个有默认，可以根据需要调整，第五个则基本不需要使用</p>
+<p><strong>需要注意，stl虽然默认给出了哈希函数和判断各个键值对键相同规则的函数，但是这些函数都只适用于基本数据类型，任何的自定义结构体与类都不再适用，需要使用者自行设计并显示给出</strong></p>
+<p>创建及其初始化方式与unordered_map一致</p>
+<h4>成员函数</h4>
+
+<table>
+    <tr width="100">
+        <td>find(key)</td>
+        <td>在容器中查找键值为key的键值对，如果成功找到，则返回指向该键值对的前向迭代器；反之，则返回和 end() 方法一样的迭代器。另外，如果 unordered_multimap 容器用 const 限定，则该方法返回的是 const 类型的前向迭代器。</td>
+    </tr>
+    <tr width="100">
+        <td>equal_range(key)</td>
+        <td>该方法返回一个 pair 对象（包含 2 个前向迭代器），表明当前容器中键为 key 的键值对所在的范围</td>
+    </tr>
+    <tr width="100">
+        <td>empty() </td>
+        <td>若容器为空，则返回 true；否则返回 false</td>
+    </tr>
+    <tr width="100">
+        <td>size()</td>
+        <td>返回当前 unordered_multimap 容器中存有键值对的个数</td>
+    </tr>
+    <tr width="100">
+        <td>max_size()</td>
+        <td>返回 unordered_multimap 容器所能容纳键值对的最大个数，其返回值与操作系统相关</td>
+    </tr>
+    <tr width="100">
+        <td>insert()</td>
+        <td>向 unordered_multimap 容器中插入键值对</td>
+    </tr>
+    <tr width="100">
+        <td>erase()</td>
+        <td>删除 unordered_multimap 容器指定位置、指定键（key）值或者指定区域内的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>swap()</td>
+        <td>在 2 个unordered_multimap容器的类型一致的条件下，交换 2 个 unordered_multimap 容器中存储的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>clear()</td>
+        <td>清空 unordered_multimap 容器中所有的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>emplace()</td>
+        <td>在当前 unordered_multimap 容器中的指定位置处构造新键值对。其效果和插入键值对一样，但效率更高</td>
+    </tr>
+    <tr width="100">
+        <td>emplace_hint()</td>
+        <td>在本质上和 emplace() 在 unordered_multimap 容器中构造新键值对的方式是一样的，不同之处在于，使用者必须为该方法提供一个指示键值对生成位置的迭代器，并作为该方法的第一个参数</td>
+    </tr>
+    <tr width="100">
+        <td>count(key)</td>
+        <td>在当前 unordered_multimap 容器中，查找键为 key 的键值对的个数并返回</td>
+    </tr>
+    <tr width="100">
+        <td>bucket_count()</td>
+        <td>返回当前容器底层存储键值对时，使用桶（线性链表）的数量</td>
+    </tr>
+    <tr width="100">
+        <td>max_bucket_count()</td>
+        <td>返回当前系统中，unordered_multimap 容器底层最多可以使用多少桶</td>
+    </tr>
+    <tr width="100">
+        <td>bucket_size(i)</td>
+        <td>返回第 i 个桶中存储键值对的数量</td>
+    </tr>
+    <tr width="100">
+        <td>bucket(key)</td>
+        <td>返回以 key 为键的键值对所在桶的编号</td>
+    </tr>
+    <tr width="100">
+        <td>load_factor()</td>
+        <td>返回 unordered_multimap 容器中当前的负载因子</td>
+    </tr>
+    <tr width="100">
+        <td>max_load_factor()</td>
+        <td>返回或者设置当前 unordered_multimap 容器的负载因子</td>
+    </tr>
+    <tr width="100">
+        <td>rehash(n)</td>
+        <td>将当前容器底层使用桶的数量设置为 n</td>
+    </tr>
+    <tr width="100">
+        <td>reserve()</td>
+        <td>将存储桶的数量（也就是 bucket_count() 方法的返回值）设置为至少容纳count个元（不超过最大负载因子）所需的数量，并重新整理容器</td>
+    </tr>
+    <tr width="100">
+        <td>hash_function()</td>
+        <td>返回当前容器使用的哈希函数对象</td>
+    </tr>
+</table>
+
+
+<p>由于unordered_multimap支持的操作unordered_multimap都支持，这里不再演示</p>
+<h3>unordered_mulitset</h3>
+
+<p>可以存在重复的</p>
+<p>unordered_multiset 容器在<code>&lt;unordered_set&gt;</code>头文件中，使用需要:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br></pre></td></tr></table></figure>
+
+<h4>定义</h4>
+
+<p>一个unordered_multiset的定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt; <span class="keyword">class</span> <span class="title class_">Key</span>,            <span class="comment">//容器中存储元素的类型</span></span><br><span class="line">           <span class="keyword">class</span> <span class="title class_">Hash</span> = hash&lt;Key&gt;,    <span class="comment">//确定元素存储位置所用的哈希函数</span></span><br><span class="line">           <span class="keyword">class</span> Pred = equal_to&lt;Key&gt;,   <span class="comment">//判断各个元素是否相等所用的函数</span></span><br><span class="line">           <span class="keyword">class</span> Alloc = allocator&lt;Key&gt;   <span class="comment">//指定分配器对象的类型</span></span><br><span class="line">           &gt; <span class="keyword">class</span> unordered_multiset;</span><br></pre></td></tr></table></figure>
+
+<p>基本上只需要定义第一个，根据需要给出第二第三个，第四个参数保持默认即可</p>
+<p><strong>需要注意，stl虽然默认给出了哈希函数和判断各个键值对键相同规则的函数，但是这些函数都只适用于基本数据类型，任何的自定义结构体与类都不再适用，需要使用者自行设计并显示给出</strong></p>
+<p>创建unordered_multiset及初始化与unordered_set一致</p>
+<h4>成员函数</h4>
+
+<table>
+    <tr width="100">
+        <td>find(key)</td>
+        <td>在容器中查找键值为key的键值对，如果成功找到，则返回指向该键值对的前向迭代器；反之，则返回和 end() 方法一样的迭代器。另外，如果 unordered_multiset 容器用 const 限定，则该方法返回的是 const 类型的前向迭代器。</td>
+    </tr>
+    <tr width="100">
+        <td>equal_range(key)</td>
+        <td>该方法返回一个 pair 对象（包含 2 个前向迭代器），表明当前容器中键为 key 的键值对所在的范围</td>
+    </tr>
+    <tr width="100">
+        <td>empty() </td>
+        <td>若容器为空，则返回 true；否则返回 false</td>
+    </tr>
+    <tr width="100">
+        <td>size()</td>
+        <td>返回当前 unordered_multiset 容器中存有键值对的个数</td>
+    </tr>
+    <tr width="100">
+        <td>max_size()</td>
+        <td>返回 unordered_multiset 容器所能容纳键值对的最大个数，其返回值与操作系统相关</td>
+    </tr>
+    <tr width="100">
+        <td>insert()</td>
+        <td>向 unordered_multiset 容器中插入键值对</td>
+    </tr>
+    <tr width="100">
+        <td>erase()</td>
+        <td>删除 unordered_multiset 容器指定位置、指定键（key）值或者指定区域内的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>swap()</td>
+        <td>在 2 个unordered_multiset容器的类型一致的条件下，交换 2 个 unordered_multiset 容器中存储的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>clear()</td>
+        <td>清空 unordered_multiset 容器中所有的键值对</td>
+    </tr>
+    <tr width="100">
+        <td>emplace()</td>
+        <td>在当前 unordered_multiset 容器中的指定位置处构造新键值对。其效果和插入键值对一样，但效率更高</td>
+    </tr>
+    <tr width="100">
+        <td>emplace_hint()</td>
+        <td>在本质上和 emplace() 在 unordered_multiset 容器中构造新键值对的方式是一样的，不同之处在于，使用者必须为该方法提供一个指示键值对生成位置的迭代器，并作为该方法的第一个参数</td>
+    </tr>
+    <tr width="100">
+        <td>count(key)</td>
+        <td>在当前 unordered_multiset 容器中，查找键为 key 的键值对的个数并返回</td>
+    </tr>
+    <tr width="100">
+        <td>bucket_count()</td>
+        <td>返回当前容器底层存储键值对时，使用桶（线性链表）的数量</td>
+    </tr>
+    <tr width="100">
+        <td>max_bucket_count()</td>
+        <td>返回当前系统中，unordered_multiset 容器底层最多可以使用多少桶</td>
+    </tr>
+    <tr width="100">
+        <td>bucket_size(i)</td>
+        <td>返回第 i 个桶中存储键值对的数量</td>
+    </tr>
+    <tr width="100">
+        <td>bucket(key)</td>
+        <td>返回以 key 为键的键值对所在桶的编号</td>
+    </tr>
+    <tr width="100">
+        <td>load_factor()</td>
+        <td>返回 unordered_multiset 容器中当前的负载因子</td>
+    </tr>
+    <tr width="100">
+        <td>max_load_factor()</td>
+        <td>返回或者设置当前 unordered_multiset 容器的负载因子</td>
+    </tr>
+    <tr width="100">
+        <td>rehash(n)</td>
+        <td>将当前容器底层使用桶的数量设置为 n</td>
+    </tr>
+    <tr width="100">
+        <td>reserve()</td>
+        <td>将存储桶的数量（也就是 bucket_count() 方法的返回值）设置为至少容纳count个元（不超过最大负载因子）所需的数量，并重新整理容器</td>
+    </tr>
+    <tr width="100">
+        <td>hash_function()</td>
+        <td>返回当前容器使用的哈希函数对象</td>
+    </tr>
+</table>
+
+
+<h2>自定义哈希函数与比较函数</h2>
+
+<p>当我们的无序关联式容器需要存储一个自定义的结构体or类的时候，内置的哈希函数和比较函数就显得不够用了，此时我们就需要自定义哈希函数和比较函数。<strong>注意，我们自定义的哈希函数与比较函数都应该是函数对象。</strong></p>
+<h3>函数对象</h3>
+
+<p>什么是函数对象？简单来说，<strong>一个类或者结构体重载了()，那么这个结构体或者类就称为一个仿函数，表示这个结构体或者类的实例化对象如果调用了()运算符，就会执行重载了的()的操作，但是它的调用形式又很像一个对象，而实际上它执行了一个函数的操作，所以被称为仿函数，又称函数对象</strong></p>
+<p>看文字也许晦涩，看这里！</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">Person</span> &#123;<span class="comment">//自定义的结构</span></span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	string name;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">Add</span> &#123;<span class="comment">//仿函数结构体</span></span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">operator</span> <span class="params">()</span><span class="params">(<span class="type">const</span> Person&amp; p1, <span class="type">const</span> Person&amp; p2)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> p1.age + p2.age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Add myAdd;<span class="comment">//函数对象的实例</span></span><br><span class="line">	Person p[<span class="number">2</span>]&#123; &#123;<span class="number">1</span>,<span class="number">10</span>,<span class="string">&quot;laowang&quot;</span>&#125;,&#123;<span class="number">2</span>,<span class="number">11</span>,<span class="string">&quot;xiaoli&quot;</span>&#125; &#125;;</span><br><span class="line">	cout &lt;&lt; <span class="built_in">myAdd</span>(p[<span class="number">0</span>], p[<span class="number">1</span>]);<span class="comment">//调用形式，看起来很像一个对象</span></span><br><span class="line">	<span class="comment">//输出为21</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>了解了函数对象，我们就可以实现自定义哈希函数以及自定义比较函数了</p>
+<h3>自定义哈希函数</h3>
+
+<p>自定义哈希函数比较简单，重载()即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">myH</span> &#123;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> Stu&amp; stu)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> stu.age % <span class="number">13</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，重载 ( ) 运算符时，其参数必须为 const 类型，且该方法也必须用 const 修饰</strong></p>
+<h3>自定义比较函数</h3>
+
+<p>对于比较函数，存在两个自定义比较函数的方式</p>
+<p>方式1.重载&#x3D;&#x3D;来实现默认的比较函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>结构体内部重载</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">Stu</span> &#123;</span><br><span class="line">	string name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	<span class="type">bool</span> <span class="keyword">operator</span> == (<span class="type">const</span> Stu&amp; stu2) <span class="type">const</span> &#123;<span class="comment">//注意最后要加const</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>-&gt;name == stu2.name &amp;&amp; <span class="keyword">this</span>-&gt;age == stu2.age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="number">2.</span>结构体外部重载</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">Stu</span> &#123;</span><br><span class="line">	string name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">bool</span> <span class="keyword">operator</span> == (<span class="type">const</span> Stu&amp; stu1,<span class="type">const</span> Stu&amp; stu2)&#123;<span class="comment">//注意两个参数都要const，尾部没有const</span></span><br><span class="line">	<span class="keyword">return</span> stu1.name == stu2.name &amp;&amp; stu1.age == stu2.age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">3.</span>对于<span class="keyword">class</span>来说，可能因为<span class="keyword">private</span>的访问权限无法直接实现外部重载，可以借助友元函数实现</span><br><span class="line"><span class="keyword">friend</span> <span class="type">bool</span> <span class="keyword">operator</span> == (<span class="type">const</span> Stu&amp; stu1,<span class="type">const</span> Stu&amp; stu2)&#123;</span><br><span class="line">    <span class="keyword">return</span> stu1.name == stu2.name &amp;&amp; stu1.age == stu2.age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//只能写在class的内部，注意尾部不能加const，因为友元函数不是类/结构的成员函数，对于参数都要加const</span></span><br></pre></td></tr></table></figure>
+
+<p>方式2：类似重载哈希函数的时候的方式，自定义一个函数对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">myEqual</span> &#123;<span class="comment">//自定义比较函数实现</span></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">operator</span> <span class="params">()</span><span class="params">(<span class="type">const</span> Stu&amp; stu1, <span class="type">const</span> Stu&amp; stu2)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> stu1.name == stu2.name &amp;&amp; stu1.age == stu2.age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//注意参数以及函数结尾都需要const</span></span><br></pre></td></tr></table></figure>
+
+<p>完整实现:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">Stu</span> &#123;</span><br><span class="line">	string name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	<span class="type">bool</span> <span class="keyword">operator</span> == (<span class="type">const</span> Stu&amp; stu2) <span class="type">const</span> &#123;<span class="comment">//重载==实现默认方法</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>-&gt;name == stu2.name &amp;&amp; <span class="keyword">this</span>-&gt;age == stu2.age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span> &lt;&lt; (ostream&amp; os, <span class="type">const</span> Stu&amp; stu) &#123;</span><br><span class="line">		os &lt;&lt; stu.name &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; stu.age &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span> os;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">myH</span> &#123;<span class="comment">//自定义哈希函数</span></span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> Stu&amp; stu)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> stu.age % <span class="number">13</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">myEqual</span> &#123;<span class="comment">//自定义比较函数实现</span></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">operator</span> <span class="params">()</span><span class="params">(<span class="type">const</span> Stu&amp; stu1, <span class="type">const</span> Stu&amp; stu2)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> stu1.name == stu2.name &amp;&amp; stu1.age == stu2.age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	unordered_set&lt;Stu, myH&gt; s;<span class="comment">//自定义哈希函数+重载==</span></span><br><span class="line">	s.<span class="built_in">insert</span>(&#123; <span class="string">&quot;wuhu&quot;</span>,<span class="number">5</span> &#125;);</span><br><span class="line">	s.<span class="built_in">insert</span>(&#123; <span class="string">&quot;dabai&quot;</span>,<span class="number">2</span> &#125;);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> c : s) &#123;</span><br><span class="line">		cout &lt;&lt; c;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">	unordered_set&lt;Stu, myH, myEqual&gt; s2;<span class="comment">//自定义哈希函数+自定义比较函数</span></span><br><span class="line">	s2.<span class="built_in">insert</span>(&#123; <span class="string">&quot;huhu&quot;</span>,<span class="number">7</span> &#125;);</span><br><span class="line">	s2.<span class="built_in">insert</span>(&#123; <span class="string">&quot;www&quot;</span>,<span class="number">14</span> &#125;);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> c : s2) &#123;</span><br><span class="line">		cout &lt;&lt; c;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Enthushtism_</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/01/05/%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/">http://example.com/2023/01/05/%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">摘星崖</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/stl/">stl</a><a class="post-meta__tags" href="/tags/c/">c++</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/05/%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8/"><img class="prev-cover" src="/img/bg.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">序列式容器</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/05/%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8/"><img class="next-cover" src="/img/bg.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">容器适配器</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/05/string/" title="string"><img class="cover" src="/img/bg.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-05</div><div class="title">string</div></div></a></div><div><a href="/2023/01/05/%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8/" title="序列式容器"><img class="cover" src="/img/bg.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-05</div><div class="title">序列式容器</div></div></a></div><div><a href="/2023/01/05/%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8/" title="容器适配器"><img class="cover" src="/img/bg.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-05</div><div class="title">容器适配器</div></div></a></div><div><a href="/2023/01/05/%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/" title="关联式容器"><img class="cover" src="/img/bg.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-05</div><div class="title">关联式容器</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Enthushtism_</div><div class="author-info__description">多爱一点这个世界，多拥抱一下世界</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/SaltyFishy" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/m0_53063591?spm=1000.2115.3001.5343" target="_blank" title="CSDN"><i class="fab fa-codiepie"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">无序关联式容器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.1.</span> <span class="toc-text">哈希表与链地址(无序关联式容器的底层实现)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text">内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.3.</span> <span class="toc-text">无序关联式容器迭代器的通用函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.4.</span> <span class="toc-text">无序关联式容器用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.4.1.</span> <span class="toc-text">unordered_map</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">成员函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.4.2.</span> <span class="toc-text">unordered_set</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">成员函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.4.3.</span> <span class="toc-text">unordered_multimap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">成员函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.4.4.</span> <span class="toc-text">unordered_mulitset</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.4.4.2.</span> <span class="toc-text">成员函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.5.</span> <span class="toc-text">自定义哈希函数与比较函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.5.1.</span> <span class="toc-text">函数对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.5.2.</span> <span class="toc-text">自定义哈希函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.5.3.</span> <span class="toc-text">自定义比较函数</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/01/05/%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8/" title="序列式容器">序列式容器</a><time datetime="2023-01-05T02:54:36.000Z" title="发表于 2023-01-05 10:54:36">2023-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/01/05/%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/" title="无序关联式容器">无序关联式容器</a><time datetime="2023-01-05T02:53:04.000Z" title="发表于 2023-01-05 10:53:04">2023-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/01/05/%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8/" title="容器适配器">容器适配器</a><time datetime="2023-01-05T02:51:14.000Z" title="发表于 2023-01-05 10:51:14">2023-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/01/05/%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/" title="关联式容器">关联式容器</a><time datetime="2023-01-05T02:49:42.000Z" title="发表于 2023-01-05 10:49:42">2023-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/01/05/string/" title="string">string</a><time datetime="2023-01-05T02:46:21.000Z" title="发表于 2023-01-05 10:46:21">2023-01-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023/1/3 - 2023 By Enthushtism_</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'http://example.com/2023/01/05/%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/'
+    this.page.identifier = '/2023/01/05/%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8/'
+    this.page.title = '无序关联式容器'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="线段树,稀疏表,KMP,今天不学习，明天变垃圾,树状数组,AC自动机,主席树,基环树,网络流,二分,平衡树,并查集,Dancing Link,单调栈,单调队列,分块,霍夫曼树,哈希表,可持久化,Suffix Array,Dijkstra,Floyd,Spfa(它死了),TopoSort,差分约束,Prim,Kruskal,Trie,dfs,bfs,Exgcd,高斯消元,Lucas定理,差分约束,快速幂,Tarjan,LCA,Flood Fill,A_star,双向Bfs,匈牙利算法" data-fontsize="20px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
