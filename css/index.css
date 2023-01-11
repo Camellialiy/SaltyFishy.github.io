@@ -4615,7 +4615,7 @@ h1.page-title + .tag-cloud-list {
   display: none;
 }
 .mathjax-overflow {
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
 }
 span.mathjax-overflow {
