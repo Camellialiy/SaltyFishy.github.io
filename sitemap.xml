@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://enthushtism.top/enthushtism/942cf6c8.html</loc>
+    
+    <lastmod>2023-03-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://enthushtism.top/enthushtism/6534ce06.html</loc>
     
     <lastmod>2023-03-15</lastmod>
@@ -102,15 +111,6 @@
   
   <url>
     <loc>https://enthushtism.top/enthushtism/7aaa1a95.html</loc>
-    
-    <lastmod>2023-03-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://enthushtism.top/enthushtism/942cf6c8.html</loc>
     
     <lastmod>2023-03-15</lastmod>
     
@@ -419,21 +419,14 @@
   </url>
   
   <url>
-    <loc>https://enthushtism.top/tags/docker/</loc>
-    <lastmod>2023-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://enthushtism.top/tags/C/</loc>
-    <lastmod>2023-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://enthushtism.top/tags/database/</loc>
+    <lastmod>2023-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://enthushtism.top/tags/docker/</loc>
     <lastmod>2023-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -477,14 +470,14 @@
   </url>
   
   <url>
-    <loc>https://enthushtism.top/categories/docker/</loc>
+    <loc>https://enthushtism.top/categories/mysql/</loc>
     <lastmod>2023-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://enthushtism.top/categories/mysql/</loc>
+    <loc>https://enthushtism.top/categories/docker/</loc>
     <lastmod>2023-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
