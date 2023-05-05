@@ -398,13 +398,6 @@
 
   
   <url>
-    <loc>https://enthushtism.top/tags/c/</loc>
-    <lastmod>2023-05-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://enthushtism.top/tags/stl/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -412,14 +405,7 @@
   </url>
   
   <url>
-    <loc>https://enthushtism.top/tags/database/</loc>
-    <lastmod>2023-05-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://enthushtism.top/tags/docker/</loc>
+    <loc>https://enthushtism.top/tags/c/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -433,6 +419,20 @@
   </url>
   
   <url>
+    <loc>https://enthushtism.top/tags/docker/</loc>
+    <lastmod>2023-05-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://enthushtism.top/tags/database/</loc>
+    <lastmod>2023-05-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://enthushtism.top/tags/string/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -440,14 +440,14 @@
   </url>
   
   <url>
-    <loc>https://enthushtism.top/tags/go/</loc>
+    <loc>https://enthushtism.top/tags/data-structure/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://enthushtism.top/tags/data-structure/</loc>
+    <loc>https://enthushtism.top/tags/go/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -463,7 +463,7 @@
   </url>
   
   <url>
-    <loc>https://enthushtism.top/categories/mysql/</loc>
+    <loc>https://enthushtism.top/categories/algorithm/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -477,14 +477,7 @@
   </url>
   
   <url>
-    <loc>https://enthushtism.top/categories/algorithm/</loc>
-    <lastmod>2023-05-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://enthushtism.top/categories/go/</loc>
+    <loc>https://enthushtism.top/categories/mysql/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -492,6 +485,13 @@
   
   <url>
     <loc>https://enthushtism.top/categories/data-structure/</loc>
+    <lastmod>2023-05-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://enthushtism.top/categories/go/</loc>
     <lastmod>2023-05-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
