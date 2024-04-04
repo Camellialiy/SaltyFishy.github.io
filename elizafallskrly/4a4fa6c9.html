@@ -1,0 +1,375 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>cs224w_2021 | 摘星崖</title><meta name="author" content="Elizafallskrly_"><meta name="copyright" content="Elizafallskrly_"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. intro1.1 图神经网络图神经网络，研究的是如何将神经网络应用到图上  通过图神经网络，我们将不再需要人为手动进行特征工程$(feature$ $engineering)$的相关操作，转而使用表示学习$(representation$ $learning)$的方式进行  通过图表示学习，将图的信息（可以是结点，子图，边等）表示为向量&#x2F;嵌入$(embedding)$ ，图中相似的结点的嵌入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cs224w_2021">
+<meta property="og:url" content="https://elizafallskrly.top/elizafallskrly/4a4fa6c9.html">
+<meta property="og:site_name" content="摘星崖">
+<meta property="og:description" content="1. intro1.1 图神经网络图神经网络，研究的是如何将神经网络应用到图上  通过图神经网络，我们将不再需要人为手动进行特征工程$(feature$ $engineering)$的相关操作，转而使用表示学习$(representation$ $learning)$的方式进行  通过图表示学习，将图的信息（可以是结点，子图，边等）表示为向量&#x2F;嵌入$(embedding)$ ，图中相似的结点的嵌入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://elizafallskrly.top/img/cs224w_2021.jpg">
+<meta property="article:published_time" content="2024-04-03T07:49:35.000Z">
+<meta property="article:modified_time" content="2024-04-04T08:17:19.239Z">
+<meta property="article:author" content="Elizafallskrly_">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://elizafallskrly.top/img/cs224w_2021.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://elizafallskrly.top/elizafallskrly/4a4fa6c9"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: {"appId":"NKSY29S9JI","apiKey":"8d4250e2ca15c28ffb5d99b4a31988c1","indexName":"Hexo","hits":{"per_page":6},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":"100# When will it be shown","position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'cs224w_2021',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-04 16:17:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script async="async">const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}
+setTimeout(function(){preloader.endLoading();}, 5000);</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 社交</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于我</span></a></li><li><a class="site-page child" href="/talk/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/plan/"><i class="fa-fw fas fa-paper-plane"></i><span> 待更新计划</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cs224w_2021.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">摘星崖</a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 社交</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于我</span></a></li><li><a class="site-page child" href="/talk/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/plan/"><i class="fa-fw fas fa-paper-plane"></i><span> 待更新计划</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">cs224w_2021</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-03T07:49:35.000Z" title="发表于 2024-04-03 15:49:35">2024-04-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-04T08:17:19.239Z" title="更新于 2024-04-04 16:17:19">2024-04-04</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="cs224w_2021"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="1-intro"><a href="#1-intro" class="headerlink" title="1. intro"></a>1. intro</h1><h2 id="1-1-图神经网络"><a href="#1-1-图神经网络" class="headerlink" title="1.1 图神经网络"></a>1.1 图神经网络</h2><p>图神经网络，研究的是如何将神经网络应用到图上</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712158524496.jpg"/></p>
+<p>通过图神经网络，我们将不再需要人为手动进行<strong>特征工程</strong>$(feature$ $engineering)$的相关操作，转而使用<strong>表示学习</strong>$(representation$ $learning)$的方式进行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712158599375.jpg"/></p>
+<p>通过图表示学习，将图的信息（可以是结点，子图，边等）表示为<strong>向量/嵌入</strong>$(embedding)$ ，图中相似的结点的嵌入结果也会相似</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712158766119.jpg"/></p>
+<h2 id="1-2-任务"><a href="#1-2-任务" class="headerlink" title="1.2 任务"></a>1.2 任务</h2><p>目前，图神经网络的主要任务可以分为四大类：</p>
+<ol>
+<li>节点级别 $node$ $level$</li>
+<li>边级别 $edge$ $level$</li>
+<li>社区 / 子图级别 $community(subgraph)$ $level$</li>
+<li>图级别，包括预测任务 $graph-level$ $prediction$ 和 图生成任务 $graph$ $generation$</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712159037557.jpg"/></p>
+<p>图神经网络任务的实例</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712159258006.jpg"/></p>
+<h2 id="1-3-图表示的选择"><a href="#1-3-图表示的选择" class="headerlink" title="1.3 图表示的选择"></a>1.3 图表示的选择</h2><p>一个图的定义如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712191352963.jpg"/></p>
+<p>可以用三种方式表示图，邻接矩阵，邻接表和边集数组</p>
+<p>有向图和无向图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712191586458.jpg"/></p>
+<p>度</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712191613305.jpg"/></p>
+<p>二分图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122191674633.jpg"/></p>
+<p>对二分图的两个集合分别投影可以得到 $Folded$ $network$</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17121917390098%20(1).jpg"/></p>
+<p>无向图的连通性</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17121918774928.jpg"/></p>
+<p>有向图的连通性</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712191978772.png"/></p>
+<p>强连通块</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712192035163.jpg"/></p>
+<h1 id="2-传统的图机器学习"><a href="#2-传统的图机器学习" class="headerlink" title="2. 传统的图机器学习"></a>2. 传统的图机器学习</h1><p>传统机器学习过程可以描述为：设计并获取所有训练数据上节点/边/图的特征→训练机器学习模型→应用模型</p>
+<p>图数据本身就会有特征，但是我们还想获得说明其在网络中的位置、其局部网络结构$local\ network\ structure$之类的特征（这些额外的特征描述了网络的拓扑结构，能使预测更加准确）<br>所以最终一共有两种特征：数据的$structural\ feature$，即图，以及其本身的$attributes\ and\ properities$，即对应的结点/边/图的属性</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712195985060.jpg"/></p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712196037491.jpg"/></p>
+<p>本章重点着眼于传统的图机器学习方法</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712196192708.jpg"/></p>
+<p>图机器学习的目标：对一系列 $object$ 做预测<br>$design\ choice:$<br>$Features:\ d-dimensional\ vectors$<br>$Objects:\ Nodes,\ edges,\ sets\ of\ nodes,\ entire\ graphs$</p>
+<h2 id="2-1-Traditional-Feature-based-Methods-Node"><a href="#2-1-Traditional-Feature-based-Methods-Node" class="headerlink" title="2.1 Traditional Feature-based Methods: Node"></a>2.1 Traditional Feature-based Methods: Node</h2><p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712196347776.jpg"/></p>
+<h3 id="2-1-1-Node-degree"><a href="#2-1-1-Node-degree" class="headerlink" title="2.1.1 Node degree"></a>2.1.1 Node degree</h3><p>以点的度作为描述特征，会导致相同度数的点被错误分类</p>
+<h3 id="2-1-2-Centrality"><a href="#2-1-2-Centrality" class="headerlink" title="2.1.2 Centrality"></a>2.1.2 Centrality</h3><p>度中心性 $Node\ Centrality$</p>
+<p>度中心性的计算方式为 $\frac{k_v}{N - 1}$， $k_v$ 为结点 $v$ 的度数<img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712196690969.jpg"/></p>
+<p>特征向量中心性 $Eigenvector\ Centrality$</p>
+<p>认为如果节点邻居重要，那么节点本身也重要</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712196775056.jpg"/></p>
+<p>这是个递归式，解法是将其转换为矩阵形式可得 $\lambda c=Ac$<br>从而发现 $c$ 就是特征向量。根据 $Perron-Frobenius\ Theorem$ 可知最大的特征值 $\lambda_{max}$ 总为正且唯一，对应的 $leading\ eigenvector\ c_{max}$ 就是 $c$ 向量</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712196824705.jpg"/></p>
+<p>中介中心性 $Betweenness\ Centrality$</p>
+<p>中介中心性考虑的是一个结点作为中介（类似图论中的桥）的可能性，认为如果一个节点处在很多节点对的最短路径上，那么这个节点是重要的。</p>
+<p>注：实例中的 $c_v$ 算错了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712196995568.jpg"/></p>
+<p>连接中心性 $Closeness\ Centrality$</p>
+<p>连接中心性描述的是一个结点作为图中心的程度，越小越接近图中心</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712197080945.jpg"/>$Clustering\ Coefficient$ 衡量节点邻居的连接程度<br>描述节点的局部结构信息，相同的节点对只算一次</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712197215761.jpg"/></p>
+<p>由于其描述的是结点 $v$ 的邻居之间的关系，可以形象的看成是找三角形</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712198242820.jpg"/></p>
+<h3 id="2-1-3-Graphlet"><a href="#2-1-3-Graphlet" class="headerlink" title="2.1.3 Graphlet"></a>2.1.3 Graphlet</h3><p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712198363238.jpg"/></p>
+<p>$Graphlets$ 是一组有根连接的诱导非同构子图 $Rooted\ connected\ induced\ non-isomorphic\ subgraphs$</p>
+<p>$induced\ graph$ 即从图中选一些点，然后把连接这些点的所有边也一起选上构成的图</p>
+<p>$isomorphic\ graph$ 即有一些图看起来形状不一样，但是实质上其结点、连接方式相同，这样的图彼此是同构的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712198623206.jpg"/></p>
+<p>对于 2-5 个结点，可以有这样的一些 $Graphlets$</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712198490820.jpg"/></p>
+<p>$GDV$ 即给出一组 $Graphlets$ ，指定图中某个节点，求这个结点对应的有多少个对应的 $Graphlets$ 的根的数目</p>
+<p>注：$c$ 为 0 是因为以 $u$ 为根时得到的子图不是 $induced$ 的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712198987857.jpg"/></p>
+<h3 id="2-1-4-Summary"><a href="#2-1-4-Summary" class="headerlink" title="2.1.4 Summary"></a>2.1.4 Summary</h3><p>总的来说，传统方法可以分为两类：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712199228382.jpg"/></p>
+<p>对结点的重要性进行分级</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712199250766.jpg"/></p>
+<p>对结点的拓扑/结构进行分级</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712199267247.jpg"/></p>
+<h2 id="2-2-Traditional-Feature-based-Methods-Link"><a href="#2-2-Traditional-Feature-based-Methods-Link" class="headerlink" title="2.2 Traditional Feature-based Methods: Link"></a>2.2 Traditional Feature-based Methods: Link</h2><p> 对于边的预测，是基于已经存在的边，预测新的边。模型运行时将会对点对进行排序，取最高的 $k$ 个点对作为结果。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712199502155.jpg"/></p>
+<p>对于边的预测可以分为两类</p>
+<p>1.随机缺失边</p>
+<p>2.随时间演化边</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17121211350590.jpg"/></p>
+<p>对于边的预测通常采用相似性算法，计算出点对之间的相似性分数 $C(x,y)$，按照该分数排序，选择得分最高的 $n$ 个点对作为输出</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712211473515.jpg"/></p>
+<h3 id="2-2-1-相似性分数"><a href="#2-2-1-相似性分数" class="headerlink" title="2.2.1 相似性分数"></a>2.2.1 相似性分数</h3><p>相似性分数的选择主要分为三类</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712211600922.jpg"/></p>
+<p>基于距离 $Distance-based\ feature$</p>
+<p>采用节点之间的最短距离计算点对分数，缺点是没有考虑到这条最短路径的性质（比如最短路长度相同，有多条最短路的点对肯定比最短路数目少的点对的稳定性更好）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122118063999.png"/></p>
+<p>捕获结点的共同邻居数 $Local\ neighborhood\ overlap$</p>
+<p>这种点对的分数计算有三种方式：</p>
+<p>1.计算点对 $v_1$ 和 $v_2$ 之间的交集个数</p>
+<p>2.计算点对 $v_1$ 和 $v_2$ 之间的交集个数除以计算点对 $v_1$ 和 $v_2$ 之间的并集个数</p>
+<p>3.$\sum{u\in N(v_1)\cap N(v_2)}\frac{1}{\log{k_u}}$</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712211923854.jpg"/></p>
+<p>但是，这种计算方式也有缺点，比如一个点对之间没有共同邻居，但是这个点对之间的距离是3（即点对之间只差两个点），这样的点对在未来也很有可能会产生连接，为了克服这个问题，提出了全局共同邻居</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122122787010.jpg"/></p>
+<p>全局共同邻居 $Global\ neighborhood\ overlap$</p>
+<p>全局共同邻居，通过计算所有长度的点对之间的路径数目作为分数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712212344937.jpg"/></p>
+<p>$Katz$ 需要计算长度为 $l$ 的路径数目，这可以通过计算 $A^k$ 得到</p>
+<p>根据矩阵理论，$Katz\ index$ 的计算方式为 $S_{v_1v_2} = \sum^{\infin}_{l=1}\beta^lA^l_{v_1v_2}$ 其解析解为 $(I-\beta A)^{-1}-I$ ，其中 $\beta$ 是一个系数，会给比较长的距离以比较小的权重</p>
+<p>解析解推导：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122185534339.jpg"/></p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712212438585.jpg"/></p>
+<h3 id="2-2-2-Summary"><a href="#2-2-2-Summary" class="headerlink" title="2.2.2 Summary"></a>2.2.2 Summary</h3><p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712212724857.jpg"/></p>
+<h2 id="2-3-Traditional-Feature-based-Methods-Graph"><a href="#2-3-Traditional-Feature-based-Methods-Graph" class="headerlink" title="2.3 Traditional Feature-based Methods: Graph"></a>2.3 Traditional Feature-based Methods: Graph</h2><p>图级别特征构建目标：找到能够描述全图结构的特征</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712215743185.jpg"/></p>
+<h3 id="2-3-1-Kernel"><a href="#2-3-1-Kernel" class="headerlink" title="2.3.1 Kernel"></a>2.3.1 Kernel</h3><p>为了计算全图的结构特征，我们可以使用 $Kernel$</p>
+<p>两个图的核 $K(G,G’)$ 以标量衡量其相似度，存在特征表示 $ϕ ( ⋅ )$ 使得 $K ( G , G’) = ϕ ( G )^T ϕ ( G’) $</p>
+<p>定义好核后就可以直接应用 $SVM$ 之类的传统机器学习模型。<br>$ϕ ( ⋅ )$ 是个表示向量，不需要被显式地计算出来</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712215824346.jpg"/></p>
+<p>下面主要介绍两种核</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712216475262.jpg"/></p>
+<p>不管是什么核，核心思想都是用 $BoW$ 的形式，计算 $bag-of$</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712216673960.jpg"/></p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712216770712.jpg"/></p>
+<h3 id="2-3-2-Graphlet-Kernel"><a href="#2-3-2-Graphlet-Kernel" class="headerlink" title="2.3.2 Graphlet Kernel"></a>2.3.2 Graphlet Kernel</h3><p>$Graphlet\ Kernel$ 计算图当中的不同 $Graphlet$ 的个数</p>
+<p>注：此处的 $Graphlets$ 和上文的 $Graphlets$ 有不同，这里允许 $Graphlets$ 不需要是连通的，且是无根的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712216796644.jpg"/></p>
+<p>一组 $Graphlets$ 的实例</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712216919432.jpg"/></p>
+<p>假定我们有一组 $Graphlets$ ，我们使用 $Geaphlets\ Kernel$ 计算向量 $f_G$</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712216978276.jpg"/></p>
+<p>一个 $f_G$ 计算的实例</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122171464692.jpg"/></p>
+<p>计算出 $f_G$ 和 $f_{G’}$ 后，进行点积运算即可直接得到 $K(G,G’)$，需要注意的是，如果 $G$ 和 $G’$ 之间的尺寸差距比较大，可以进行归一化</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712217263493.jpg"/></p>
+<p>但是，这种计算方式会带来高昂的计算代价，为了解决这一问题，提出了 $Weisfeiler-Lehman\  Kernel$</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712217595765.jpg"/></p>
+<h3 id="2-3-3-Weisfeiler-Lehman-Kernel"><a href="#2-3-3-Weisfeiler-Lehman-Kernel" class="headerlink" title="2.3.3 Weisfeiler-Lehman Kernel"></a>2.3.3 Weisfeiler-Lehman Kernel</h3><p>用节点邻居结构迭代地来扩充节点信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122177556066.jpg"/></p>
+<p>算法的执行流程</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712217842740.jpg"/></p>
+<p>一个执行实例</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712217865734.jpg"/></p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/12712217883172.jpg"/></p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712217928963.jpg"/></p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712217939832.jpg"/></p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122179880325.jpg"/></p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122181100500.jpg"/></p>
+<p>显而易见的，这样的计算方式复杂度更低</p>
+<p>最多只有结点个数个颜色，复杂度接近线性 $O(m)$，其中 $m$ 为边数 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/1712218141605.jpg"/></p>
+<h3 id="2-3-4-Summary"><a href="#2-3-4-Summary" class="headerlink" title="2.3.4 Summary"></a>2.3.4 Summary</h3><p><img src="https://cdn.jsdelivr.net/gh/SaltyFishy/blog-img/17122182387224.jpg"/></p>
+<h1 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://elizafallskrly.top">Elizafallskrly_</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://elizafallskrly.top/elizafallskrly/4a4fa6c9.html">https://elizafallskrly.top/elizafallskrly/4a4fa6c9.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://elizafallskrly.top" target="_blank">摘星崖</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/cs224w_2021.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/elizafallskrly/f3defc1e.html"><img class="next-cover" src="/img/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">吴恩达机器学习</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Elizafallskrly_</div><div class="author-info__description">多爱一点这个世界，多拥抱一下世界</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/SaltyFishy"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/SaltyFishy" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/m0_53063591?spm=1000.2115.3001.5343" target="_blank" title="CSDN"><i class="fab fa-codiepie"></i></a><a class="social-icon" href="https://www.luogu.com.cn/user/645540" target="_blank" title="Luogu"><i class="fa fa-comment"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">一个 sztuer 的稀奇古怪幻想屋~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-intro"><span class="toc-text">1. intro</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-text">1.1 图神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E4%BB%BB%E5%8A%A1"><span class="toc-text">1.2 任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-text">1.3 图表示的选择</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%BC%A0%E7%BB%9F%E7%9A%84%E5%9B%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-text">2. 传统的图机器学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-Traditional-Feature-based-Methods-Node"><span class="toc-text">2.1 Traditional Feature-based Methods: Node</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-Node-degree"><span class="toc-text">2.1.1 Node degree</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-Centrality"><span class="toc-text">2.1.2 Centrality</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-Graphlet"><span class="toc-text">2.1.3 Graphlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-4-Summary"><span class="toc-text">2.1.4 Summary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-Traditional-Feature-based-Methods-Link"><span class="toc-text">2.2 Traditional Feature-based Methods: Link</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E7%9B%B8%E4%BC%BC%E6%80%A7%E5%88%86%E6%95%B0"><span class="toc-text">2.2.1 相似性分数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-Summary"><span class="toc-text">2.2.2 Summary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-Traditional-Feature-based-Methods-Graph"><span class="toc-text">2.3 Traditional Feature-based Methods: Graph</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-Kernel"><span class="toc-text">2.3.1 Kernel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-Graphlet-Kernel"><span class="toc-text">2.3.2 Graphlet Kernel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-3-Weisfeiler-Lehman-Kernel"><span class="toc-text">2.3.3 Weisfeiler-Lehman Kernel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-4-Summary"><span class="toc-text">2.3.4 Summary</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3"><span class="toc-text">3.</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/elizafallskrly/4a4fa6c9.html" title="cs224w_2021"><img src="/img/cs224w_2021.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cs224w_2021"/></a><div class="content"><a class="title" href="/elizafallskrly/4a4fa6c9.html" title="cs224w_2021">cs224w_2021</a><time datetime="2024-04-03T07:49:35.000Z" title="发表于 2024-04-03 15:49:35">2024-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/elizafallskrly/f3defc1e.html" title="吴恩达机器学习"><img src="/img/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="吴恩达机器学习"/></a><div class="content"><a class="title" href="/elizafallskrly/f3defc1e.html" title="吴恩达机器学习">吴恩达机器学习</a><time datetime="2024-01-10T14:31:37.000Z" title="发表于 2024-01-10 22:31:37">2024-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/elizafallskrly/49006407.html" title="prolist"><img src="/img/prolist.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="prolist"/></a><div class="content"><a class="title" href="/elizafallskrly/49006407.html" title="prolist">prolist</a><time datetime="2023-05-10T09:39:20.000Z" title="发表于 2023-05-10 17:39:20">2023-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/elizafallskrly/942cf6c8.html" title="cpp-reference"><img src="/img/cpp-reference.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cpp-reference"/></a><div class="content"><a class="title" href="/elizafallskrly/942cf6c8.html" title="cpp-reference">cpp-reference</a><time datetime="2023-03-15T02:22:31.000Z" title="发表于 2023-03-15 10:22:31">2023-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/elizafallskrly/f255ffad.html" title="docker"><img src="/img/docker.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker"/></a><div class="content"><a class="title" href="/elizafallskrly/f255ffad.html" title="docker">docker</a><time datetime="2023-01-20T13:46:56.000Z" title="发表于 2023-01-20 21:46:56">2023-01-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023/1/3 - 2024 By Elizafallskrly_</div><div class="framework-info"><span>ICP:</span>
+<a href="http://beian.miit.gov.cn/"  target="_blank">粤ICP备2023028292号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'yQEOxaynnoS0xpejLnvwQGOM-gzGzoHsz',
+      appKey: 'HIFfBBRsf20WHLklfma0EkX9',
+      avatar: 'mp',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="29947420" data-server="netease" data-type="song" data-fixed="true" data-autoplay="false"> </div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="线段树,稀疏表,KMP,今天不学习，明天变垃圾,树状数组,AC自动机,主席树,基环树,网络流,二分,平衡树,并查集,Dancing Link,单调栈,单调队列,分块,霍夫曼树,哈希表,可持久化,Suffix Array,Dijkstra,Floyd,Spfa(它死了),TopoSort,差分约束,Prim,Kruskal,Trie,dfs,bfs,Exgcd,高斯消元,Lucas定理,差分约束,快速幂,Tarjan,LCA,Flood Fill,A_star,双向Bfs,匈牙利算法,FFT,中国剩余定理,高精度,容斥原理,差分约束,单纯形法,负环,IDA*,矩阵,Prefix Sum,差分,树链剖分,扫描线,manacher,乘法逆元,三分,Z函数,String Hash,线性筛,莫队,裴蜀定理,线性同余方程" data-fontsize="20px" data-random="true" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
